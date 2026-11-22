@@ -1,0 +1,1239 @@
+# UNINEST — COMPLETE FULL-STACK DEVELOPMENT MASTER PROMPT
+
+## 1. YOUR ROLE
+
+Act as a senior full-stack development team consisting of:
+
+- Senior product designer and UI/UX designer.
+- Senior React and TypeScript developer.
+- Supabase and database architect.
+- Backend and API developer.
+- Security engineer.
+- QA and software testing engineer.
+
+Your responsibility is to design, build, test and deliver a complete, professional, responsive and functional student accommodation platform called **UniNest**.
+
+Do not treat this as a simple landing-page project. Build a complete application with real database operations, authentication, permissions, dashboards and functional user workflows.
+
+Work directly in the Lovable project. Do not stop after generating a plan or a prototype. Implement the application in logical stages until all agreed core features are complete.
+
+---
+
+# 2. PROJECT IDENTITY
+
+**Product name:** UniNest
+
+**Product category:** Student accommodation marketplace and community platform.
+
+**Core concept:**
+
+UniNest connects students searching for accommodation with verified property owners and resident caretakers.
+
+It provides a trusted environment where students can discover accommodation, compare properties, contact hosts, request viewings, save properties, interact with other students and access accommodation-related community content.
+
+Property owners and resident caretakers can advertise and manage properties according to their permissions.
+
+Administrators oversee platform verification, users, listings, reports and moderation.
+
+**Core brand message:**
+
+Find your space. Start your next chapter.
+
+**Primary target audience:**
+- University and college students.
+- Property owners.
+- Resident caretakers.
+- Platform administrators.
+
+**Initial market:** Kenya.
+
+Use Kenyan conventions throughout the application:
+- Currency: Kenyan Shillings (KSh).
+- Example prices: KSh 9,500/month.
+- Locations should include Juja, Ruiru, Kahawa, Thika, Kilimani, Westlands, Karen and Nyali.
+- Use Kenyan phone-number formatting where appropriate.
+- Display accommodation prices in a clear, consistent format.
+
+Build the architecture so the platform can expand to other Kenyan towns and cities.
+
+---
+
+# 3. TECHNOLOGY STACK
+
+Build a modern full-stack application using:
+
+### Frontend
+- React.
+- TypeScript.
+- Vite.
+- Tailwind CSS.
+- A consistent reusable component system.
+- Lucide icons or suitable equivalent.
+- React Router or the routing solution supported by the project.
+
+### Backend
+- Supabase.
+- Supabase Authentication.
+- Supabase PostgreSQL database.
+- Supabase Storage.
+- Supabase Row Level Security (RLS).
+- Supabase Edge Functions where appropriate.
+
+Use secure database access and server-side validation for sensitive operations.
+
+Do not expose service-role keys, private API keys or secrets in frontend code.
+
+Use environment variables for configuration.
+
+Create clean, maintainable and reusable code. Avoid putting the entire application into one large component.
+
+---
+
+# 4. DESIGN AND BRAND IDENTITY
+
+## Most important design instruction
+
+I have existing Google Stitch designs for UniNest.
+
+Treat the supplied Stitch designs, screenshots and exported HTML as the primary visual reference.
+
+**Reproduce the established design rather than creating a new visual identity.**
+
+Do not arbitrarily change:
+- Brand colours.
+- Typography.
+- Navigation.
+- Page structure.
+- Card layouts.
+- Spacing.
+- Button styles.
+- Visual hierarchy.
+- Overall design direction.
+
+Where a design is available, follow it closely. Where a page has not been designed, extend the existing design system consistently.
+
+The design direction combines:
+
+1. Premium and trustworthy property discovery.
+2. A youthful, social student experience.
+
+Property discovery should feel professional and trustworthy. Discover and Community should feel engaging and social.
+
+## Brand colours
+
+Use the following palette:
+
+- Background: `#effdf1`
+- White: `#ffffff`
+- Primary: `#002517`
+- Primary container: `#123b2a`
+- Green: `#296a46`
+- Light green: `#abefc1`
+- Lime accent: `#c5f176`
+- Main text: `#121e17`
+- Secondary text: `#414844`
+- Borders and muted elements: `#c1c8c2`
+
+Use Plus Jakarta Sans as the primary font.
+
+Use Material Symbols or a visually consistent icon library.
+
+## Design requirements
+
+- Desktop-first implementation.
+- Fully responsive on tablets and mobile phones.
+- Consistent spacing and typography.
+- Professional navigation and footer.
+- High-quality property photography.
+- Consistent image proportions.
+- Clear empty states.
+- Loading states and skeletons.
+- Success and error notifications.
+- Accessible forms and controls.
+- Proper hover, focus and active states.
+- No unnecessary animations.
+- No broken image links.
+- No generic, unfinished-looking interface.
+
+Do not use placeholder buttons that do nothing.
+
+Every visible interactive element must either work or be clearly marked as unavailable.
+
+---
+
+# 5. USER ROLES AND PERMISSIONS
+
+Implement four distinct roles:
+
+## A. Student
+
+Students can:
+
+- Register and log in.
+- Complete their student profile.
+- Browse accommodation.
+- Search and filter properties.
+- View property details.
+- Save and remove favourite properties.
+- Contact property owners and caretakers.
+- Send accommodation enquiries.
+- Request property viewings.
+- Track enquiry and viewing statuses.
+- Access their dashboard.
+- Manage their profile.
+- Participate in Discover.
+- Participate in Community.
+- Send and receive messages.
+- Manage notifications.
+- Report suspicious listings or inappropriate content.
+
+Students must not access landlord, caretaker or administrator management pages.
+
+## B. Property Owner
+
+Property owners can:
+
+- Register as property owners.
+- Submit a host application.
+- Complete their host profile.
+- Submit required verification information.
+- Wait for administrator approval.
+- Create property listings after approval.
+- Upload property images.
+- Edit their own properties.
+- Manage availability and pricing.
+- View enquiries.
+- Respond to enquiries.
+- Manage viewing requests.
+- Communicate with prospective tenants.
+- View dashboard statistics.
+- Manage their profile.
+
+Property owners must only manage properties they own or are explicitly authorised to manage.
+
+## C. Resident Caretaker
+
+Resident caretakers can:
+
+- Register as resident caretakers.
+- Submit a host application.
+- Complete their caretaker profile.
+- Submit required verification information.
+- Wait for administrator approval.
+- View properties assigned to them.
+- Manage permitted information for assigned properties.
+- Upload or manage permitted property images.
+- Respond to enquiries for assigned properties.
+- Manage viewing requests for assigned properties.
+- Communicate with prospective tenants.
+- View their caretaker dashboard.
+
+Caretakers must only access properties with an active assignment.
+
+They must never automatically receive access to every property belonging to an owner.
+
+Implement explicit caretaker-to-property assignments.
+
+## D. Administrator
+
+Administrators can:
+
+- Access a protected admin dashboard.
+- View platform statistics.
+- Manage users.
+- Review host applications.
+- Approve or reject host applications.
+- Review property submissions.
+- Approve, reject or suspend listings.
+- View reported content.
+- Moderate Discover posts.
+- Moderate Community discussions.
+- Manage reported users.
+- Review platform activity.
+- View audit records.
+- Suspend accounts where justified.
+- Manage platform settings.
+
+Admin access must be restricted using verified database roles and server-side authorization.
+
+Never rely on hiding buttons or frontend route protection alone.
+
+---
+
+# 6. AUTHENTICATION AND ACCOUNT MANAGEMENT
+
+Build complete authentication workflows.
+
+Required pages:
+
+- Welcome/get-started page.
+- Student registration.
+- Login.
+- Password recovery.
+- Password reset.
+- Student profile setup.
+- Host registration/application.
+- Account verification and status screens.
+
+### Student registration
+
+Collect appropriate information, including:
+
+- Full name.
+- Email address.
+- Phone number.
+- Password.
+- University or college.
+- Other useful profile information.
+
+Create the account with the student role.
+
+### Host registration
+
+Support two scenarios:
+
+1. A new user applying to become a Property Owner or Resident Caretaker.
+2. An existing student applying to become a Property Owner or Resident Caretaker using their existing account.
+
+Do not create duplicate accounts for existing students.
+
+Student registration must remain separate from host registration.
+
+Host application status should include:
+
+- Pending.
+- Approved.
+- Rejected.
+
+A user applying for host access must retain their existing student access while the application is pending or rejected.
+
+Only an approved application should change the user's effective role.
+
+Preserve the user's existing account ID and account history.
+
+### Important host application policy requirement
+
+Do not invent legal terms, Community Standards or policy versions.
+
+Host Terms and Community Standards must be presented as separate, accessible documents once their approved content is supplied.
+
+Acceptance of mandatory host terms must be recorded independently and audibly, including the accepted version and timestamp.
+
+SMS/WhatsApp notification consent must be:
+- Separate from mandatory terms acceptance.
+- Optional.
+- Unchecked by default.
+- Recorded only after an explicit opt-in.
+- Reversible through a withdrawal action.
+- Auditable.
+
+If approved legal documents and policy versions have not been supplied, keep host application submission safely blocked and explain what is missing. Do not fake acceptance or create placeholder legal content.
+
+---
+
+# 7. DATABASE ARCHITECTURE
+
+Design a clean relational PostgreSQL database in Supabase.
+
+Use appropriate primary keys, foreign keys, indexes, timestamps, constraints and relationships.
+
+Create and document the necessary tables. At minimum, consider:
+
+### User and profile tables
+- profiles
+- student_profiles
+- host_profiles
+- host_applications
+- host_terms_acceptances
+- notification_consents
+- notification_consent_events
+
+### Property tables
+- properties
+- property_images
+- property_amenities
+- amenities
+- property_caretakers
+- property_verification_records
+
+### Student interaction tables
+- saved_properties
+- enquiries
+- viewing_requests
+- reviews
+
+### Communication tables
+- conversations
+- conversation_participants
+- messages
+- notifications
+
+### Social tables
+- discover_posts
+- discover_post_media
+- discover_likes
+- discover_comments
+- discover_saves
+- community_categories
+- community_posts
+- community_comments
+- community_likes
+
+### Administration tables
+- reports
+- moderation_actions
+- audit_logs
+- platform_settings
+
+You may refine this schema when technically justified, but document the relationships and avoid unnecessary duplication.
+
+### Database rules
+
+- Use UUIDs where appropriate.
+- Use created_at and updated_at timestamps.
+- Add appropriate foreign keys.
+- Add indexes for frequently searched fields.
+- Prevent duplicate favourites.
+- Prevent duplicate active caretaker assignments.
+- Use appropriate status constraints.
+- Preserve important audit history.
+- Handle deletion and account deactivation safely.
+- Use database transactions for multi-step critical operations where necessary.
+
+Do not silently remove or overwrite data.
+
+Before applying destructive database changes, explain the change and request approval.
+
+---
+
+# 8. PROPERTY DISCOVERY AND SEARCH
+
+Build a fully functional accommodation discovery experience.
+
+### Search filters
+
+Allow students to search by:
+
+- Town or location.
+- Estate or neighbourhood.
+- Minimum budget.
+- Maximum budget.
+- Property type.
+- Room type.
+- Availability.
+- Amenities.
+- Distance or proximity to an institution where supported.
+
+### Property categories
+
+Support accommodation types such as:
+
+- Bedsitters.
+- Single rooms.
+- Studios.
+- Shared rooms.
+- Hostels.
+- One-bedroom apartments.
+- Two-bedroom apartments.
+- Other suitable accommodation types.
+
+### Search results
+
+Display:
+
+- Property image.
+- Property name.
+- Location.
+- Monthly rent.
+- Property type.
+- Available amenities.
+- Verification status.
+- Distance to a nearby university where verified.
+- Favourite button.
+
+Implement:
+
+- Working search.
+- Working filters.
+- Sorting.
+- Pagination or efficient loading.
+- Empty search results.
+- Loading states.
+- Clear filter/reset functionality.
+
+Do not display hardcoded search results when database-backed results should be shown.
+
+---
+
+# 9. PROPERTY DETAILS
+
+Every property must have a dedicated details page.
+
+Display:
+
+- Property name.
+- Image gallery.
+- Monthly rent.
+- Location.
+- Property description.
+- Property type.
+- Room details.
+- Amenities.
+- Availability.
+- Nearby universities or colleges.
+- Location/map information where supported.
+- Owner or caretaker information.
+- Verification status.
+- Contact/enquiry action.
+- Request viewing action.
+- Save property action.
+
+Include appropriate mobile layouts.
+
+Protect personal contact information and only expose information intended to be public.
+
+---
+
+# 10. PROPERTY MANAGEMENT
+
+Build a complete property-management workflow.
+
+Approved property owners can:
+
+1. Open the property management area.
+2. Create a new listing.
+3. Enter property details.
+4. Upload images.
+5. Select amenities.
+6. Set rent.
+7. Set location.
+8. Set availability.
+9. Preview the listing.
+10. Submit for verification.
+11. Track verification status.
+12. Edit their permitted listing details.
+
+Administrators must review listings before they become publicly verified.
+
+Support listing statuses such as:
+
+- Draft.
+- Pending review.
+- Approved.
+- Rejected.
+- Suspended.
+- Unavailable.
+
+Implement secure image upload using Supabase Storage.
+
+Validate file types and sizes.
+
+Do not trust file extensions alone.
+
+### Caretaker permissions
+
+Implement explicit assignment workflows.
+
+Property owners or authorised administrators should be able to assign a caretaker to a property.
+
+Caretakers can only manage properties with an active assignment.
+
+Enforce these restrictions in database policies and backend operations, not just the interface.
+
+---
+
+# 11. STUDENT DASHBOARD
+
+Build a student dashboard that includes:
+
+- Welcome section.
+- Profile completion.
+- Saved properties.
+- Recent enquiries.
+- Upcoming viewings.
+- Recent messages.
+- Notifications.
+- Recommended properties.
+- Quick actions.
+
+Allow students to track their accommodation search from one place.
+
+All dashboard information must come from the authenticated user's actual database records.
+
+---
+
+# 12. LANDLORD DASHBOARD
+
+Build a dedicated property-owner dashboard.
+
+Include:
+
+- Welcome section.
+- Total properties.
+- Active listings.
+- Pending verification.
+- Total enquiries.
+- Pending viewing requests.
+- Recent messages.
+- Property performance summaries.
+- Recent activity.
+- Quick actions.
+
+Provide navigation to:
+
+- My Properties.
+- Add Property.
+- Enquiries.
+- Viewing Requests.
+- Messages.
+- Profile and Settings.
+
+Only display information the authenticated owner is authorised to access.
+
+---
+
+# 13. CARETAKER DASHBOARD
+
+Build a separate caretaker dashboard.
+
+Include:
+
+- Assigned properties.
+- Active listings.
+- Pending enquiries.
+- Viewing requests.
+- Recent messages.
+- Recent activity.
+
+Provide access to only the features permitted by active property assignments.
+
+Clearly identify the properties assigned to the caretaker.
+
+Do not simply reuse the owner dashboard with different labels if the permissions and workflows are different.
+
+---
+
+# 14. ADMIN DASHBOARD
+
+Create a professional administration interface.
+
+Include:
+
+- Total registered users.
+- Students.
+- Property owners.
+- Resident caretakers.
+- Pending host applications.
+- Pending property listings.
+- Approved listings.
+- Rejected listings.
+- Reported content.
+- Recent platform activity.
+
+### Host application management
+
+Administrators should be able to:
+
+- View pending applications.
+- Inspect application information.
+- Review submitted verification information.
+- Approve applications.
+- Reject applications.
+- Record review notes.
+- View application history.
+
+Require confirmation before sensitive administrative actions.
+
+Use transactions when updating an application and its associated user role.
+
+Prevent applications from being reviewed more than once.
+
+### Property verification
+
+Administrators should be able to:
+
+- View pending listings.
+- Inspect property details and images.
+- Approve listings.
+- Reject listings with a reason.
+- Suspend listings where necessary.
+
+### Moderation
+
+Provide tools for reviewing reports and taking appropriate action against inappropriate content.
+
+Record important administrative actions in an audit log.
+
+---
+
+# 15. DISCOVER — SOCIAL DISCOVERY EXPERIENCE
+
+Build a modern, engaging Discover experience.
+
+The purpose is to help students explore accommodation through visual content.
+
+Features:
+
+- Discover feed.
+- Property video posts.
+- Image posts.
+- Captions.
+- Creator profiles.
+- Like and unlike.
+- Comments.
+- Save posts.
+- Share functionality.
+- Report functionality.
+- Relevant property links.
+
+Use a visually engaging layout inspired by modern social platforms while preserving UniNest's brand identity.
+
+Support portrait video content.
+
+Provide suitable upload validation and media storage.
+
+Include moderation and reporting tools.
+
+Do not allow unmoderated content to bypass platform safety controls.
+
+If a full video-processing pipeline is unavailable, implement reliable video upload and playback using supported browser formats, and document any limitations.
+
+---
+
+# 16. COMMUNITY
+
+Build a student community section.
+
+Students should be able to:
+
+- Browse discussions.
+- Create posts.
+- Comment on discussions.
+- Like posts.
+- Search discussions.
+- Browse categories.
+- Report inappropriate content.
+
+Suggested categories:
+
+- Accommodation Advice.
+- Campus Life.
+- Roommates.
+- Moving and Settling In.
+- Safety and Security.
+- General Discussions.
+
+Use a clean, readable discussion interface.
+
+Provide empty states and useful sorting options.
+
+Protect the community against spam and abuse through validation, reporting and moderation.
+
+---
+
+# 17. MESSAGING AND NOTIFICATIONS
+
+Build functional communication tools.
+
+### Messaging
+
+Allow students and authorised hosts to:
+
+- Start conversations.
+- Send messages.
+- Receive messages.
+- View conversation history.
+- See message timestamps.
+- View unread-message indicators.
+
+Only authorised conversation participants should access messages.
+
+Use Supabase Realtime where appropriate.
+
+### Notifications
+
+Support notifications for:
+
+- New enquiries.
+- Enquiry replies.
+- Viewing confirmations.
+- Viewing updates.
+- New messages.
+- Host application decisions.
+- Property verification decisions.
+- Relevant community interactions.
+
+Provide:
+
+- Notification list.
+- Read/unread status.
+- Mark as read.
+- Mark all as read.
+- Notification preferences.
+
+Do not pretend SMS, WhatsApp or email delivery works unless the relevant provider has been configured and tested.
+
+---
+
+# 18. FAVOURITES, ENQUIRIES AND VIEWING REQUESTS
+
+### Favourites
+
+Students can save properties and remove them from their saved list.
+
+Prevent duplicate saved-property records.
+
+### Enquiries
+
+Students can submit enquiries about properties.
+
+Hosts can view and respond to enquiries for properties they are authorised to manage.
+
+Track statuses such as:
+
+- New.
+- Responded.
+- Closed.
+
+### Viewing requests
+
+Students can request property viewings.
+
+Hosts can:
+
+- View requests.
+- Accept.
+- Reject.
+- Propose an alternative time.
+- Mark a viewing as completed.
+
+Students can track the status of their requests.
+
+Validate dates and times.
+
+Prevent unauthorised access to another user's enquiries and viewing requests.
+
+---
+
+# 19. NAVIGATION AND REQUIRED PAGES
+
+Create a complete and consistent application navigation system.
+
+At minimum, implement these pages:
+
+### Public pages
+- Welcome / Get Started.
+- Home.
+- Find a House.
+- Property Details.
+- Discover.
+- Community.
+- Login.
+- Student Registration.
+- Host Registration / Application.
+- Password Recovery.
+
+### Student pages
+- Student Dashboard.
+- Student Profile.
+- Saved Properties.
+- My Enquiries.
+- My Viewings.
+- Messages.
+- Notifications.
+- Settings.
+
+### Host pages
+- Host Dashboard.
+- My Properties.
+- Add Property.
+- Edit Property.
+- Property Details Management.
+- Enquiries.
+- Viewing Requests.
+- Messages.
+- Host Profile.
+- Settings.
+
+### Admin pages
+- Admin Dashboard.
+- User Management.
+- Host Applications.
+- Property Verification.
+- Listing Management.
+- Reports and Moderation.
+- Audit Logs.
+- Platform Settings.
+
+Create a separate, appropriate navigation experience for each role.
+
+Protect every private route.
+
+Ensure direct URL access is checked against the authenticated user's permissions.
+
+---
+
+# 20. HOMEPAGE REQUIREMENTS
+
+The homepage should closely follow the supplied Stitch desktop homepage.
+
+Include:
+
+1. Sticky navigation header.
+2. UniNest logo and navigation links.
+3. Hero section.
+4. Main heading: "Your next chapter starts with the right place."
+5. Supporting text.
+6. Search panel with location, monthly budget and property type.
+7. "Find a House" action.
+8. Trust and verification cards.
+9. Featured accommodation section.
+10. Discover preview cards.
+11. Popular locations.
+12. Property-owner call to action.
+13. Community preview.
+14. Footer.
+
+Use real database-backed property content where available.
+
+Clearly identify demo content.
+
+Do not invent verification claims, statistics or property reviews.
+
+If demonstration figures are used in a development preview, clearly label them as sample figures.
+
+---
+
+# 21. SECURITY REQUIREMENTS
+
+Security is a core requirement, not an optional enhancement.
+
+Implement:
+
+- Supabase Row Level Security on all user-related tables.
+- Role-based access control.
+- Server-side validation for sensitive operations.
+- Protected administrative operations.
+- Secure authentication.
+- Secure password reset.
+- Safe file uploads.
+- Input validation.
+- Output escaping where applicable.
+- Protection against unauthorised data access.
+- Appropriate rate limiting for sensitive actions where supported.
+- Secure database relationships.
+- Audit logging for important administrative actions.
+
+### RLS rules must ensure:
+
+- Students can only edit their own private profiles.
+- Users cannot change their own role.
+- Hosts cannot access another host's private property-management records.
+- Caretakers can only access actively assigned properties.
+- Students cannot access host-only functions.
+- Only administrators can approve or reject applications and listings.
+- Conversation participants alone can read their conversations.
+- Users cannot modify another user's enquiries or viewing requests.
+- Moderation actions are restricted to authorised administrators.
+
+Never trust frontend role values.
+
+Never allow users to grant themselves administrator or host permissions.
+
+Test the policies with different account roles.
+
+---
+
+# 22. SAMPLE DATA AND DEMONSTRATION CONTENT
+
+Seed the development environment with clearly labelled demonstration properties.
+
+Use these examples as initial sample listings:
+
+1. Acacia Heights Bedsitter — Juja / High Point — KSh 9,500/month.
+2. Kilimani Executive Studio — KSh 22,000/month.
+3. Ruiru Greenview Hostels — KSh 7,500/month.
+4. The Palm Residency — Kahawa Sukari — KSh 14,000/month.
+
+Use appropriate images and descriptions.
+
+Label sample listings as demonstration content until they are replaced with verified real listings.
+
+Do not falsely label sample hosts or properties as verified.
+
+Create enough demonstration content to make the interface useful during testing.
+
+Never use fabricated demonstration content as proof of real platform activity.
+
+---
+
+# 23. FUNCTIONALITY AND QUALITY REQUIREMENTS
+
+The application must be functional, not merely visually convincing.
+
+Every major button, form, menu, filter and action must work.
+
+Examples:
+
+- Registration must create an account.
+- Login must authenticate the user.
+- Logout must end the session.
+- Search must query actual property data.
+- Filters must change results.
+- Favourites must persist.
+- Property forms must save data.
+- Images must upload.
+- Enquiries must be stored.
+- Viewing requests must be stored.
+- Messages must be accessible to participants.
+- Dashboards must display real records.
+- Admin decisions must update the correct records.
+- Role restrictions must be enforced.
+- Notifications must reflect actual events.
+
+Do not use fake success messages.
+
+Do not create buttons that only look functional.
+
+Do not leave critical workflows as TODO comments or visual placeholders.
+
+If an integration requires external credentials, build the integration structure, explain the missing configuration and do not pretend it has been activated.
+
+---
+
+# 24. TESTING AND VALIDATION
+
+Test the application systematically.
+
+### Authentication testing
+- Student registration.
+- Login.
+- Logout.
+- Password recovery.
+- Protected routes.
+- Session handling.
+
+### Role testing
+Test using separate accounts for:
+
+- Student.
+- Property Owner.
+- Resident Caretaker.
+- Administrator.
+
+Confirm each role can access only its permitted features.
+
+### Property testing
+- Create listing.
+- Upload images.
+- Edit listing.
+- Submit for verification.
+- Approve listing.
+- Reject listing.
+- Search properties.
+- Filter properties.
+- Save and unsave properties.
+
+### Host testing
+- New host application.
+- Existing student applying for host access.
+- Pending status.
+- Approval.
+- Rejection.
+- Preservation of student access.
+- Caretaker assignment.
+- Caretaker access restrictions.
+
+### Communication testing
+- Submit enquiry.
+- Reply to enquiry.
+- Request viewing.
+- Update viewing status.
+- Send message.
+- Read notifications.
+
+### Social testing
+- Create Discover post.
+- Upload media.
+- Like and unlike.
+- Comment.
+- Create Community post.
+- Report content.
+- Moderate reported content.
+
+### Security testing
+- Attempt unauthorised route access.
+- Attempt unauthorised database operations.
+- Attempt role escalation.
+- Attempt access to another user's records.
+- Attempt access to an unassigned property as a caretaker.
+
+Fix issues discovered during testing.
+
+Do not claim a feature has passed testing unless it has actually been tested.
+
+---
+
+# 25. DEVELOPMENT WORKFLOW
+
+Build the application in stages.
+
+Do not attempt to create every page in one enormous component.
+
+Use a clean project structure and reusable components.
+
+### Stage 1 — Project foundation
+- Initialise the project.
+- Establish the design system.
+- Configure routing.
+- Connect Supabase.
+- Create the shared layout.
+- Build the public navigation and footer.
+- Build the homepage.
+
+### Stage 2 — Database and authentication
+- Create database schema.
+- Configure authentication.
+- Build registration and login.
+- Implement profile setup.
+- Implement role-based permissions.
+- Configure and test RLS.
+
+### Stage 3 — Property marketplace
+- Property search.
+- Filters.
+- Property cards.
+- Property details.
+- Favourites.
+- Property management.
+- Image uploads.
+- Listing verification.
+
+### Stage 4 — Host workflows
+- Host applications.
+- Host profiles.
+- Administrator review.
+- Owner dashboard.
+- Caretaker dashboard.
+- Caretaker assignment and access controls.
+
+### Stage 5 — Student experience
+- Student dashboard.
+- Enquiries.
+- Viewing requests.
+- Notifications.
+- Messaging.
+
+### Stage 6 — Social experience
+- Discover.
+- Community.
+- Media uploads.
+- Likes and comments.
+- Reports and moderation.
+
+### Stage 7 — Administration
+- Admin dashboard.
+- User management.
+- Application review.
+- Property verification.
+- Content moderation.
+- Audit logs.
+
+### Stage 8 — Final quality assurance
+- Test all workflows.
+- Fix errors.
+- Improve responsiveness.
+- Improve performance.
+- Review accessibility.
+- Review security.
+- Update documentation.
+- Prepare deployment.
+
+At the end of each stage, verify that the implemented functionality works before moving forward.
+
+Do not discard working functionality when implementing later stages.
+
+---
+
+# 26. IMPORTANT DEVELOPMENT RULES
+
+1. Build the complete application, not just a frontend prototype.
+2. Preserve the UniNest identity and supplied Stitch design.
+3. Use modular, maintainable code.
+4. Use Supabase as the actual backend.
+5. Do not hardcode important application data.
+6. Do not use mock authentication.
+7. Do not bypass database security.
+8. Do not invent legal policies or verification claims.
+9. Do not create duplicate student accounts for host applications.
+10. Do not give caretakers unrestricted owner permissions.
+11. Do not expose private credentials.
+12. Do not silently perform destructive database operations.
+13. Do not leave major features as non-functional placeholders.
+14. Do not claim untested functionality is complete.
+15. Explain missing external credentials or configuration.
+16. Prioritise working end-to-end workflows over decorative features.
+17. Keep the interface responsive and consistent.
+18. Maintain clear documentation.
+
+If a requirement is ambiguous, make a reasonable technical decision that preserves the product requirements. Ask me only when a decision requires my approval, legal content, credentials or an irreversible action.
+
+---
+
+# 27. DEFINITION OF DONE
+
+UniNest should be considered ready for its first complete release only when:
+
+- The public website is complete.
+- Authentication works.
+- All four roles are implemented.
+- Role permissions are enforced.
+- Students can discover and save properties.
+- Property owners can manage authorised listings.
+- Caretakers can manage only assigned properties.
+- Host applications can be reviewed securely.
+- Property verification works.
+- Students can submit enquiries.
+- Viewing requests work.
+- Messaging works.
+- Notifications work.
+- Discover works.
+- Community works.
+- Admin moderation works.
+- Supabase database and storage are configured.
+- RLS policies have been tested.
+- Responsive layouts work on desktop and mobile.
+- Major workflows have been tested.
+- No critical errors remain.
+- Setup and deployment instructions are documented.
+
+Any feature blocked by missing approved legal content, external credentials or unavailable integrations must be clearly identified rather than falsely marked complete.
+
+---
+
+# 28. FINAL INSTRUCTION
+
+Begin by inspecting the available project files and the supplied Google Stitch designs.
+
+First establish the application architecture and implementation plan.
+
+Then begin building immediately, stage by stage.
+
+Do not stop after presenting the plan.
+
+Prioritise a working, secure and visually consistent application.
+
+At the end, provide a clear report containing:
+
+1. Features implemented.
+2. Pages completed.
+3. Database tables created.
+4. Supabase integrations configured.
+5. Security policies implemented.
+6. Tests performed and their results.
+7. Known bugs and limitations.
+8. Features awaiting legal content or external configuration.
+9. Deployment instructions.
+10. Remaining tasks before production release.
+
+**The ultimate goal is to deliver UniNest as a complete, functional, secure and professional student accommodation platform — not merely a beautiful demonstration website.**

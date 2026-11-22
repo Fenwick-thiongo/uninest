@@ -1,0 +1,8 @@
+{
+  "name": "UniNest",
+  "description": "Kenyan student accommodation marketplace and community platform connecting university students with verified property owners and resident caretakers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

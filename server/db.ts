@@ -463,7 +463,94 @@ export function initDatabase(): void {
   `);
 
   seedInitialData();
+  seedStartupDefaults();
   ensureInitialPolicyDrafts();
+}
+
+/** Restore the required published policies and optional environment admin after a database reset. */
+function seedStartupDefaults(): void {
+  const adminEmail = process.env.ADMIN_EMAIL?.trim();
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (adminEmail && adminPassword) {
+    const existingAdmin = db.prepare('SELECT id FROM users WHERE email = ?').get(adminEmail) as
+      | { id: string }
+      | undefined;
+    if (!existingAdmin) {
+      const adminId = newId();
+      db.prepare(
+        `INSERT INTO users (id, email, password_hash, role, status, email_verified)
+         VALUES (?, ?, ?, 'admin', 'active', 1)`
+      ).run(adminId, adminEmail, hashPassword(adminPassword));
+      db.prepare(
+        `INSERT INTO profiles (user_id, full_name, phone, bio, preferred_town)
+         VALUES (?, 'UniNest Administrator', 'Not provided', 'Platform administration.', 'Nairobi')`
+      ).run(adminId);
+    }
+  }
+
+  const adminId = (db.prepare("SELECT id FROM users WHERE role = 'admin' ORDER BY created_at ASC LIMIT 1")
+    .get() as { id: string } | undefined)?.id ?? null;
+  const policies = [
+    {
+      type: 'host_terms',
+      title: 'UniNest Kenya Host Terms & Conditions',
+      version: '1.0',
+      content: 'Hosts must provide accurate property, rent, deposit, availability, and contact information. Hosts must have authority to manage each listed property, keep listings current, and cooperate with UniNest verification. Do not request viewing or booking fees before a student can inspect a property and review clear tenancy terms. Use student information only to respond to genuine housing enquiries and protect it from disclosure. Host applications and listings remain subject to review; serious or repeated violations may lead to removal or account suspension. UniNest connects students and hosts and is not a party to their tenancy agreements.',
+      settingVersion: 'host_terms_version',
+      settingContent: 'host_terms_content',
+    },
+    {
+      type: 'community_standards',
+      title: 'UniNest Kenya Community Standards',
+      version: '1.0',
+      content: 'Treat students, hosts, and other community members with respect. Harassment, threats, discrimination, scams, impersonation, misleading property claims, spam, and sharing another person’s private information without consent are not allowed. Keep discussions relevant to student housing and report suspicious listings or conduct using the platform tools. UniNest may review reports and remove content, reject listings, or restrict accounts when these standards are violated.',
+      settingVersion: 'community_standards_version',
+      settingContent: 'community_standards_content',
+    },
+  ] as const;
+
+  const publishedQuery = db.prepare(
+    "SELECT id, version, content FROM policy_document_versions WHERE document_type = ? AND status = 'published' LIMIT 1"
+  );
+  const insertPolicy = db.prepare(
+    `INSERT INTO policy_document_versions (
+      id, document_type, title, version, content, status, is_initial_draft,
+      change_notes, created_by, published_by, published_at
+    ) VALUES (?, ?, ?, ?, ?, 'published', 0, ?, ?, ?, datetime('now'))`
+  );
+  const insertSetting = db.prepare(
+    `INSERT INTO platform_settings (key, value, updated_by, updated_at)
+     VALUES (?, ?, ?, datetime('now'))
+     ON CONFLICT(key) DO UPDATE SET
+       value = excluded.value, updated_by = excluded.updated_by, updated_at = datetime('now')
+     WHERE platform_settings.value IS NULL`
+  );
+  const versionExists = db.prepare(
+    'SELECT 1 FROM policy_document_versions WHERE document_type = ? AND version = ?'
+  );
+
+  for (const policy of policies) {
+    let published = publishedQuery.get(policy.type) as
+      | { id: string; version: string; content: string }
+      | undefined;
+    if (!published) {
+      const id = newId();
+      let version = policy.version;
+      let suffix = 0;
+      while (versionExists.get(policy.type, version)) {
+        suffix += 1;
+        version = `${policy.version}-bootstrap-${suffix}`;
+      }
+      insertPolicy.run(
+        id, policy.type, policy.title, version, policy.content,
+        'Initial published platform policy.', adminId, adminId
+      );
+      published = { id, version, content: policy.content };
+    }
+    insertSetting.run(policy.settingVersion, published.version, adminId);
+    insertSetting.run(policy.settingContent, published.content, adminId);
+  }
 }
 
 function seedInitialData(): void {
